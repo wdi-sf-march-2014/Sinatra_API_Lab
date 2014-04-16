@@ -25,5 +25,6 @@ __Suggestions__:
 * Make sure to read over and run the rspec tests.
 * Make some very simple pages just to get all the routes working.  Then build up to the movie app.
 * Even if you do not write your own tests, try to understand what the tests are doing to test the app.
+* Check out the __[sinatra docs](http://www.sinatrarb.com/intro.html)__ if you don't know how to do something in sinatra.
 
 
