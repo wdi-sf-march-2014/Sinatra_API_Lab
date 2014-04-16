@@ -7,9 +7,9 @@ require 'json'
 get '/' do
 end
 
-get '/result' do
+get '/results' do
 end
 
-post '/test' do
-end
+# TODO: Add another get here for the poster url.  The path for the poster
+# should look like this example '/poster/tt2724064'
 
