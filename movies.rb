@@ -10,14 +10,12 @@ html_str =
 <<-eos 
 <html>
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
-<h1>SFlikster</h1><p></p><body>Enter a movie title or IMDB ID number here: </body>
+<h1>ODB Movie Search</h1><p></p><body>Enter a movie title or IMDB ID number here: </body>
 <form method="get" action="/results">
 <input type="text" name="movie">
 <input type="submit">
-
-
 </form>
-
+<img src="http://www.dustygroove.com/images/products/o/oldirtybast_returntot_101b.jpg"</>
 </html>
 eos
 
