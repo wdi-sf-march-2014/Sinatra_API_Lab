@@ -9,36 +9,35 @@ get '/' do
 end
 
 get '/results' do
+	movie = params[:movie]
+
 	if params.keys.length == 0
 		return "Please go back and search for a movie."
 	end
-
-	movie = params[:movie]
-
+	
 	response = Typhoeus.get("www.omdbapi.com", :params => {:s => movie })
-
 	parsed_response = JSON.parse(response.body)
-
 	all_titles = parsed_response['Search']
-
 	html_paragraph = ""
 
 	all_titles.each do |result|
 		title = result['Title'].to_s
 		year = result['Year'].to_s
 		imdbID = result['imdbID']
-		html_paragraph += "<br><a href=poster/#{imdbID}> #{title} - #{year}</a><br>"
+		html_paragraph += "<br><a href=poster?imdbID=#{imdbID}> #{title} - #{year}</a><br>"
 	end
 
 	"#{html_paragraph}"
 
 end
 
-# get '/poster' do
+get '/poster' do
+	imdbID = params[:imdbID]
 
-# 	id = params[:imdbID]
+	details = Typhoeus.get("www.omdbapi.com", :params => {:i => imdbID })
+	details_parsed = JSON.parse(details.body)
+	poster = details_parsed['Poster']
 
+	"<img src=#{poster} />"
 
-
-# TODO: Add another get here for the poster url.  The path for the poster
-# should look like this example '/poster/tt2724064'
+end
