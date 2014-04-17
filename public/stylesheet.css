@@ -1,0 +1,19 @@
+h1 {
+
+	color: black;
+	font-size: 100px;
+	text-align: center;
+}
+
+body {
+	color:blue;
+	text-align: center;
+}
+
+li {
+	font-size: 20px;
+	font-family: georgia;
+	text-align: left;
+	color: blue;
+	font-weight: bold;
+}

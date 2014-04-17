@@ -8,3 +8,4 @@ gem "json"
 gem "rspec"
 gem "pry"
 gem "capybara"
+gem 'bootstrap-sass'
