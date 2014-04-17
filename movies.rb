@@ -24,17 +24,17 @@ get '/results' do
 		title = result['Title'].to_s
 		year = result['Year'].to_s
 		imdbID = result['imdbID']
-		html_paragraph += "<br><a href=poster?imdbID=#{imdbID}> #{title} - #{year}</a><br>"
+		html_paragraph += "<br><a href=poster/#{imdbID}> #{title} - #{year}</a><br>"
 	end
 
 	"#{html_paragraph}"
 
 end
 
-get '/poster' do
+get '/poster/:imdbID' do
 	imdbID = params[:imdbID]
 
-	details = Typhoeus.get("www.omdbapi.com", :params => {:i => imdbID })
+	details = Typhoeus.get("www.omdbapi.com", :params => {:i => params[:imdbID] })
 	details_parsed = JSON.parse(details.body)
 	poster = details_parsed['Poster']
 
