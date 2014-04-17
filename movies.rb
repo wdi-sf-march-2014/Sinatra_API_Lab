@@ -4,8 +4,14 @@ require 'sinatra/reloader'
 require 'typhoeus'
 require 'json'
 
+# /css/style.css
+
 get '/' do
-	"<form action='/results'>Search Movie Title: <input type='text' name='movie'><input type='submit' value='Submit'></form>"
+	"<link href='/css/style.css' rel='stylesheet'>
+	<h1>find a movie, any movie</h1>
+	<body>
+	<form action='/results'>search by title: <input type='text' name='movie'><input type='submit' value='submit'></form>
+	</body>"
 end
 
 get '/results' do
@@ -13,22 +19,28 @@ get '/results' do
 
 	if params.keys.length == 0
 		return "Please go back and search for a movie."
+
+	else
+		response = Typhoeus.get("www.omdbapi.com", :params => {:s => movie })
+		parsed_response = JSON.parse(response.body)
+		all_titles = parsed_response['Search']
+		all_titles_sorted = all_titles.sort_by { |hash| hash['Year'] }
+
+		html_paragraph = ""
+
+		all_titles_sorted.each do |result|
+			title = result['Title'].to_s
+			year = result['Year'].to_s
+			imdbID = result['imdbID']
+			html_paragraph += "<br><a href=poster/#{imdbID}> #{title} - #{year}</a><br>"
+		end
+
+		"<link href='/css/style.css' rel='stylesheet'>
+		<h1>which movie?</h1>
+		<body>
+		#{html_paragraph}
+		</body>"
 	end
-	
-	response = Typhoeus.get("www.omdbapi.com", :params => {:s => movie })
-	parsed_response = JSON.parse(response.body)
-	all_titles = parsed_response['Search']
-	html_paragraph = ""
-
-	all_titles.each do |result|
-		title = result['Title'].to_s
-		year = result['Year'].to_s
-		imdbID = result['imdbID']
-		html_paragraph += "<br><a href=poster/#{imdbID}> #{title} - #{year}</a><br>"
-	end
-
-	"#{html_paragraph}"
-
 end
 
 get '/poster/:imdbID' do
@@ -38,6 +50,8 @@ get '/poster/:imdbID' do
 	details_parsed = JSON.parse(details.body)
 	poster = details_parsed['Poster']
 
-	"<img src=#{poster} />"
+	"<link href='../css/style.css' rel='stylesheet'>
+	<h1>here you go. enjoy your eye candy.</h1>
+	<img src=#{poster} />"
 
 end
