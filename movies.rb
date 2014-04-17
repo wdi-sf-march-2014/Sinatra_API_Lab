@@ -25,8 +25,16 @@ html_str =
 end
 
 get '/results' do
+	
+
+
 	#Gets JSON information and display in results page.
 search = params[:movie]
+
+if search == "" || search == nil
+	return "You broke it"
+end	
+
 results = Typhoeus.get("www.omdbapi.com/?s=#{search}")
 omdb_data = JSON.parse(results.body)
 
