@@ -10,12 +10,15 @@ get '/' do
    <p>Please enter your movie below:</p>
    <form action="/results" method="get">
    Movie: <input type="text" name="movie"><br>
-   <input type="submit" value="Submit"></form>'
+   <input type="submit"></form>'
 
 end
 
 get '/results' do
-
+  if params["movie"] == ""
+    return "Please go back and enter a real movie!"
+  end
+ 
   response = Typhoeus.get("http://www.omdbapi.com/",:params => {:s => "#{params[:movie]}"})
   result = JSON.parse(response.body)
   str = ""
