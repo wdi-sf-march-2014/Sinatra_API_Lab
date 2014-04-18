@@ -34,8 +34,9 @@ end
 # should look like this example '/poster/tt2724064'
 
 get '/poster/:imdbID' do
-	response = Typhoeus.get("http://www.omdbapi.com/", :params => {:s => params["imdbID"]})
+	response = Typhoeus.get("http://www.omdbapi.com/", :params => {:i => params["imdbID"]})
 	posters = JSON.parse(response.body)
+	puts posters
 	"<img src = #{posters["Poster"]}/>"
 end
 
